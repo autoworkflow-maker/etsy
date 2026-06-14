@@ -1,0 +1,44 @@
+name: Stage 3 — Product Creation
+
+on:
+  workflow_run:
+    workflows: ["Stage 2 — AI Analysis"]
+    types: [completed]
+  workflow_dispatch:
+
+jobs:
+  create:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install anthropic reportlab fpdf2 Pillow openpyxl cloudinary
+
+      - name: Create products
+        run: python scripts/create_products.py
+        env:
+          ANTHROPIC_API_KEY:      ${{ secrets.ANTHROPIC_API_KEY }}
+          CLOUDINARY_CLOUD_NAME:  ${{ secrets.CLOUDINARY_CLOUD_NAME }}
+          CLOUDINARY_API_KEY:     ${{ secrets.CLOUDINARY_API_KEY }}
+          CLOUDINARY_API_SECRET:  ${{ secrets.CLOUDINARY_API_SECRET }}
+
+      - name: Upload product files as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: products-${{ github.run_id }}
+          path: products/
+
+      - name: Commit product metadata
+        run: |
+          git config user.email "bot@pipeline.com"
+          git config user.name "Pipeline Bot"
+          git add data/created_today.json
+          git commit -m "Products created $(date +%Y-%m-%d)" || true
+          git push

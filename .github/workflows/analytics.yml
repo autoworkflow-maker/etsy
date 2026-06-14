@@ -1,0 +1,49 @@
+name: Stage 5 — Analytics & Smart Sales Manager
+
+on:
+  schedule:
+    - cron: '0 22 * * *'  # Every day at 10:00 PM UTC
+  workflow_dispatch:
+
+jobs:
+  analytics:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests pandas anthropic
+
+      - name: Collect analytics from all platforms
+        run: python scripts/collect_analytics.py
+        env:
+          ETSY_ACCESS_TOKEN:  ${{ secrets.ETSY_ACCESS_TOKEN }}
+          SHOPIFY_STORE:      ${{ secrets.SHOPIFY_STORE }}
+          SHOPIFY_TOKEN:      ${{ secrets.SHOPIFY_TOKEN }}
+          GUMROAD_TOKEN:      ${{ secrets.GUMROAD_TOKEN }}
+
+      - name: Score winners and update queue
+        run: python scripts/score_winners.py
+
+      - name: Run smart sales manager (update Shopify listings)
+        run: python scripts/smart_sales_manager.py
+        env:
+          ANTHROPIC_API_KEY:  ${{ secrets.ANTHROPIC_API_KEY }}
+          SHOPIFY_STORE:      ${{ secrets.SHOPIFY_STORE }}
+          SHOPIFY_TOKEN:      ${{ secrets.SHOPIFY_TOKEN }}
+
+      - name: Generate dashboard report
+        run: python scripts/generate_dashboard.py
+
+      - name: Commit all analytics outputs
+        run: |
+          git config user.email "bot@pipeline.com"
+          git config user.name "Pipeline Bot"
+          git add data/analytics.json data/winner_queue.json data/DASHBOARD.md
+          git commit -m "Analytics $(date +%Y-%m-%d)" || true
+          git push

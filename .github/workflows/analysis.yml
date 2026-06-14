@@ -1,0 +1,35 @@
+name: Stage 2 — AI Analysis
+
+on:
+  workflow_run:
+    workflows: ["Stage 1 — Daily Trend Research"]
+    types: [completed]
+  workflow_dispatch:
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install anthropic
+
+      - name: Run AI scoring
+        run: python scripts/analyze.py
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+
+      - name: Commit scored results
+        run: |
+          git config user.email "bot@pipeline.com"
+          git config user.name "Pipeline Bot"
+          git add data/scored.json data/todays_picks.json
+          git commit -m "AI scores $(date +%Y-%m-%d)" || true
+          git push

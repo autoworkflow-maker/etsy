@@ -1,0 +1,42 @@
+name: Stage 4 — Auto Publish
+
+on:
+  workflow_run:
+    workflows: ["Stage 3 — Product Creation"]
+    types: [completed]
+  workflow_dispatch:
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    if: ${{ github.event.workflow_run.conclusion == 'success' || github.event_name == 'workflow_dispatch' }}
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Publish to Etsy + Shopify + Blogger
+        run: python scripts/publish.py
+        env:
+          ETSY_API_KEY:          ${{ secrets.ETSY_API_KEY }}
+          ETSY_SHOP_ID:          ${{ secrets.ETSY_SHOP_ID }}
+          ETSY_ACCESS_TOKEN:     ${{ secrets.ETSY_ACCESS_TOKEN }}
+          SHOPIFY_STORE:         ${{ secrets.SHOPIFY_STORE }}
+          SHOPIFY_TOKEN:         ${{ secrets.SHOPIFY_TOKEN }}
+          BLOGGER_BLOG_ID:       ${{ secrets.BLOGGER_BLOG_ID }}
+          BLOGGER_OAUTH_TOKEN:   ${{ secrets.BLOGGER_OAUTH_TOKEN }}
+          BUFFER_TOKEN:          ${{ secrets.BUFFER_TOKEN }}
+
+      - name: Commit publish log
+        run: |
+          git config user.email "bot@pipeline.com"
+          git config user.name "Pipeline Bot"
+          git add data/published.json
+          git commit -m "Published $(date +%Y-%m-%d)" || true
+          git push
