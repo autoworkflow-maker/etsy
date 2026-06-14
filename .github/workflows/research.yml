@@ -1,0 +1,41 @@
+name: Stage 1 — Daily Trend Research
+
+on:
+  schedule:
+    - cron: '0 2 * * *'   # Every day at 2:00 AM UTC
+  workflow_dispatch:        # Manual trigger from GitHub UI
+
+jobs:
+  research:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests pytrends praw beautifulsoup4
+
+      - name: Run trend research
+        run: python scripts/research.py
+        env:
+          REDDIT_CLIENT_ID:  ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_SECRET:     ${{ secrets.REDDIT_SECRET }}
+          ETSY_API_KEY:      ${{ secrets.ETSY_API_KEY }}
+
+      - name: Upload trends artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: trends-${{ github.run_id }}
+          path: data/trends.json
+
+      - name: Commit trends to repo
+        run: |
+          git config user.email "bot@pipeline.com"
+          git config user.name "Pipeline Bot"
+          git add data/trends.json
+          git commit -m "Daily trends update $(date +%Y-%m-%d)" || true
+          git push
