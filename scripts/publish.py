@@ -14,51 +14,47 @@ ETSY_API_KEY = os.getenv("ETSY_API_KEY") or os.getenv("ETSY_KEYSTRING")
 ETSY_SHARED_SECRET = os.getenv("ETSY_SHARED_SECRET")
 
 # ── Etsy ──────────────────────────────────────────────────────
+# ── Etsy ──────────────────────────────────────────────────────
 
 def publish_to_etsy(product):
     if not ETSY_ACCESS_TOKEN:
         print("  No Etsy token — skipping")
         return None
-headers = {
-    "x-api-key": f"{ETSY_API_KEY}:{ETSY_SHARED_SECRET}",
-    "Authorization": f"Bearer {ETSY_ACCESS_TOKEN}"
-        }
-payload = {
-        "title":        product["etsy_title"][:140],
-        "description":  product["etsy_description"],
-        "price":        product.get("suggested_price", 9.00),
-        "quantity":     999,
-        "tags":         product["etsy_tags"][:13],
-        "taxonomy_id":  2078,   # Digital prints category
-        "type":         "download",
-        "digital":      True,
-        "who_made":     "i_did",
-        "when_made":    "made_to_order",
-        "is_supply":    False
+
+    headers = {
+        "x-api-key": f"{ETSY_API_KEY}:{ETSY_SHARED_SECRET}",
+        "Authorization": f"Bearer {ETSY_ACCESS_TOKEN}"
     }
 
-    url      = f"https://openapi.etsy.com/v3/application/shops/{ETSY_SHOP_ID}/listings"
+    payload = {
+        "title": product["etsy_title"][:140],
+        "description": product["etsy_description"],
+        "price": product.get("suggested_price", 9.00),
+        "quantity": 999,
+        "tags": product["etsy_tags"][:13],
+        "taxonomy_id": 2078,
+        "type": "download",
+        "digital": True,
+        "who_made": "i_did",
+        "when_made": "made_to_order",
+        "is_supply": False
+    }
+
+    url = f"https://openapi.etsy.com/v3/application/shops/{ETSY_SHOP_ID}/listings"
     response = requests.post(url, headers=headers, data=payload)
-    result   = response.json()
+    result = response.json()
 
     if "listing_id" in result:
         listing_id = result["listing_id"]
         print(f"  Etsy listing created: {listing_id}")
 
-        # Upload the digital file to the listing
         if product.get("pdf_url"):
-            file_url = f"https://openapi.etsy.com/v3/application/shops/{ETSY_SHOP_ID}/listings/{listing_id}/files"
-            file_payload = {"name": "product.pdf", "rank": 1}
-            # Note: Etsy requires actual file upload, not URL. In production,
-            # download from Cloudinary and re-upload as multipart/form-data
-            # This is a placeholder for that logic
             print(f"  Note: attach PDF manually or via multipart upload to listing {listing_id}")
 
         return listing_id
-    else:
-        print(f"  Etsy error: {result}")
-        return None
 
+    print(f"  Etsy error: {result}")
+    return None
 
 # ── Shopify ───────────────────────────────────────────────────
 
