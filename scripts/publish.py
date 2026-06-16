@@ -19,8 +19,7 @@ def publish_to_etsy(product):
     if not ETSY_ACCESS_TOKEN:
         print("  No Etsy token — skipping")
         return None
-
-   headers = {
+headers = {
     "x-api-key": f"{ETSY_API_KEY}:{ETSY_SHARED_SECRET}",
     "Authorization": f"Bearer {ETSY_ACCESS_TOKEN}"
         }
