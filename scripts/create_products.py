@@ -59,7 +59,7 @@ Price: ${pick.get('suggested_price', 4.99)}
 Return ONLY a JSON object, no explanation:
 {{
   "etsy_title": "SEO-optimised Etsy title max 140 chars, keyword first",
-  "etsy_description": "Full product description 300-400 words, benefits-led, FAQ at end",
+  "etsy_description": "Full product description 200 words, benefits-led, FAQ at end",
   "etsy_tags": ["tag1","tag2","tag3","tag4","tag5","tag6","tag7","tag8","tag9","tag10","tag11","tag12","tag13"],
   "pdf_guide_title": "catchy PDF cover title",
   "pdf_subtitle": "one line subtitle",
@@ -75,14 +75,15 @@ Return ONLY a JSON object, no explanation:
   "social_post": "Twitter/X post max 240 chars with hashtags"
 }}
 
-Include 5 worksheets, 6 workflow steps, 5 checklist items, 4 tools.
+Include 3 worksheets, 4 workflow steps, 5 checklist items, 3 tools.
+Keep all values short. Return valid JSON only.
 Do not create AI prompt packs, medical claims, financial guarantees, celebrity/brand/copyrighted content.
 Etsy tags must be exactly 13. Each tag max 20 chars.
 """
 
     response = client.messages.create(
         model="claude-sonnet-4-6",  # Quality matters for product content
-        max_tokens=3000,
+        max_tokens=2000,
         messages=[{"role": "user", "content": prompt}]
     )
 
