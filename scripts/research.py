@@ -17,9 +17,10 @@ try:
 except ImportError:
     PRAW_AVAILABLE = False
 
-ETSY_API_KEY     = os.getenv("ETSY_API_KEY")
-REDDIT_CLIENT_ID = os.getenv("REDDIT_CLIENT_ID")
-REDDIT_SECRET    = os.getenv("REDDIT_SECRET")
+ETSY_API_KEY       = os.getenv("ETSY_API_KEY")
+ETSY_SHARED_SECRET = os.getenv("ETSY_SHARED_SECRET")
+REDDIT_CLIENT_ID   = os.getenv("REDDIT_CLIENT_ID")
+REDDIT_SECRET      = os.getenv("REDDIT_SECRET")
 
 # ── Niche configuration — edit these to match your niche ──────
 NICHE_KEYWORDS = [
@@ -43,7 +44,7 @@ def scrape_etsy_trends():
         return []
 
     results = []
-    headers = {"x-api-key": ETSY_API_KEY}
+    headers = {"x-api-key": f"{ETSY_API_KEY}:{ETSY_SHARED_SECRET}"}
 
     for keyword in NICHE_KEYWORDS:
         try:
