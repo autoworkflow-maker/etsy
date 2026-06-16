@@ -2,10 +2,12 @@ name: Stage 1 — Daily Trend Research
 
 on:
   schedule:
-    - cron: '0 2 * * *'   # Every day at 2:00 AM UTC
-  workflow_dispatch:        # Manual trigger from GitHub UI
+    - cron: '0 2 * * *'
+  workflow_dispatch:
+
 permissions:
   contents: write
+
 jobs:
   research:
     runs-on: ubuntu-latest
@@ -23,27 +25,25 @@ jobs:
       - name: Run trend research
         run: python scripts/research.py
         env:
-          REDDIT_CLIENT_ID:  ${{ secrets.REDDIT_CLIENT_ID }}
-          REDDIT_SECRET:     ${{ secrets.REDDIT_SECRET }}
-          ETSY_API_KEY:      ${{ secrets.ETSY_API_KEY }}
+          REDDIT_CLIENT_ID: ${{ secrets.REDDIT_CLIENT_ID }}
+          REDDIT_SECRET: ${{ secrets.REDDIT_SECRET }}
+          ETSY_API_KEY: ${{ secrets.ETSY_API_KEY }}
           ETSY_SHARED_SECRET: ${{ secrets.ETSY_SHARED_SECRET }}
-          
+
       - name: Upload trends artifact
         uses: actions/upload-artifact@v4
         with:
           name: trends-${{ github.run_id }}
           path: data/trends.json
 
-       - name: Commit trends to repo
-  run: |
-    git config user.email "bot@pipeline.com"
-    git config user.name "Pipeline Bot"
+      - name: Commit trends to repo
+        run: |
+          git config user.email "bot@pipeline.com"
+          git config user.name "Pipeline Bot"
 
-    git add data/trends.json
-    git commit -m "Daily trends update $(date +%Y-%m-%d)" || true
+          git add data/trends.json
+          git commit -m "Daily trends update $(date +%Y-%m-%d)" || true
 
-    git pull --rebase origin main
+          git pull --rebase origin main
 
-    git push origin main
-     
-     
+          git push origin main
