@@ -23,8 +23,7 @@ headers = {
     "x-api-key": f"{ETSY_API_KEY}:{ETSY_SHARED_SECRET}",
     "Authorization": f"Bearer {ETSY_ACCESS_TOKEN}"
         }
-
-    payload = {
+payload = {
         "title":        product["etsy_title"][:140],
         "description":  product["etsy_description"],
         "price":        product.get("suggested_price", 9.00),
