@@ -10,7 +10,8 @@ SHOPIFY_TOKEN      = os.getenv("SHOPIFY_TOKEN")
 BLOGGER_BLOG_ID    = os.getenv("BLOGGER_BLOG_ID")
 BLOGGER_TOKEN      = os.getenv("BLOGGER_OAUTH_TOKEN")
 BUFFER_TOKEN       = os.getenv("BUFFER_TOKEN")
-
+ETSY_API_KEY = os.getenv("ETSY_API_KEY") or os.getenv("ETSY_KEYSTRING")
+ETSY_SHARED_SECRET = os.getenv("ETSY_SHARED_SECRET")
 
 # ── Etsy ──────────────────────────────────────────────────────
 
@@ -20,9 +21,10 @@ def publish_to_etsy(product):
         return None
 
     headers = {
-        "x-api-key":    os.getenv("ETSY_API_KEY"),
-        "Authorization": f"Bearer {ETSY_ACCESS_TOKEN}",
-        "Content-Type": "application/x-www-form-urlencoded"
+        headers = {
+            "x-api-key": f"{ETSY_API_KEY}:{ETSY_SHARED_SECRET}",
+            "Authorization": f"Bearer {ETSY_ACCESS_TOKEN}"
+            "Content-Type": "application/x-www-form-urlencoded"
     }
 
     payload = {
