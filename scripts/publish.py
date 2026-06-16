@@ -21,6 +21,21 @@ def publish_to_etsy(product):
         print("  No Etsy token — skipping")
         return None
 
+    print("  API Key loaded:", bool(ETSY_API_KEY))
+    print("  Shared Secret loaded:", bool(ETSY_SHARED_SECRET))
+    print("  Shop ID loaded:", bool(ETSY_SHOP_ID))
+
+    if ETSY_API_KEY:
+        print("  API Key length:", len(ETSY_API_KEY))
+
+    if ETSY_SHARED_SECRET:
+        print("  Secret length:", len(ETSY_SHARED_SECRET))
+
+    headers = {
+        "x-api-key": f"{ETSY_API_KEY}:{ETSY_SHARED_SECRET}",
+        "Authorization": f"Bearer {ETSY_ACCESS_TOKEN}"
+    }
+
     headers = {
         "x-api-key": f"{ETSY_API_KEY}:{ETSY_SHARED_SECRET}",
         "Authorization": f"Bearer {ETSY_ACCESS_TOKEN}"
