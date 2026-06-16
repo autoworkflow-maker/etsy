@@ -328,26 +328,27 @@ def upload_to_cloudinary(filepath, folder, resource_type="raw"):
 # ── 5. Main ───────────────────────────────────────────────────
 
 def run():
-    print(f"Product creation started: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
+print(f"Product creation started: {datetime.now().strftime('%Y-%m-%d %H:%M')}")
 
-    with open("data/todays_picks.json", "r") as f:
-        picks = json.load(f)
+with open("data/todays_picks.json", "r") as f:
+    picks = json.load(f)
 
-    today     = datetime.now().strftime("%Y-%m-%d")
-    created   = []
+today = datetime.now().strftime("%Y-%m-%d")
+created = []
 
-    for i, pick in enumerate(picks):
-         if not is_etsy_safe(pick):
+for i, pick in enumerate(picks):
+    if not is_etsy_safe(pick):
         print(f"Skipped policy-risk product: {pick['keyword']}")
         continue
-        keyword = pick["keyword"]
-ptype = pick.get("product_type", "").lower()
 
-if "planner" in ptype:
-    pick["suggested_price"] = min(
-        pick.get("suggested_price", 9.99),
-        9.99
-    )
+    keyword = pick["keyword"]
+    ptype = pick.get("product_type", "").lower()
+
+    if "planner" in ptype:
+        pick["suggested_price"] = min(
+            pick.get("suggested_price", 9.99),
+            9.99
+        )
 
 if "tracker" in ptype:
     pick["suggested_price"] = min(
