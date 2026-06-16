@@ -17,6 +17,11 @@ ETSY_SHARED_SECRET = os.getenv("ETSY_SHARED_SECRET")
 # ── Etsy ──────────────────────────────────────────────────────
 # ── Etsy ──────────────────────────────────────────────────────
 
+def clean_etsy_title(title):
+    allowed = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -_,.&()[]/"
+    cleaned = "".join(c for c in title if c in allowed)
+    return cleaned[:140]
+    
 def refresh_etsy_token():
     url = "https://api.etsy.com/v3/public/oauth/token"
 
@@ -65,9 +70,10 @@ def publish_to_etsy(product):
         "x-api-key": f"{ETSY_API_KEY}:{ETSY_SHARED_SECRET}",
         "Authorization": f"Bearer {ETSY_ACCESS_TOKEN}"
     }
+    
 
     payload = {
-        "title": product["etsy_title"][:140],
+        "title": clean_etsy_title(product["etsy_title"]),
         "description": product["etsy_description"],
         "price": product.get("suggested_price", 9.00),
         "quantity": 999,
