@@ -1,1 +1,44 @@
-[]
+[
+  {
+    "keyword": "social media caption pack",
+    "scores": {
+      "revenue": 7,
+      "utility": 6,
+      "competition": 6,
+      "momentum": 2
+    },
+    "total": 21,
+    "make_today": true,
+    "product_type": "Digital caption pack",
+    "suggested_price": 10.39,
+    "niche_angle": "Instagram caption pack for small business owners in beauty/wellness niche"
+  },
+  {
+    "keyword": "ai prompt pack",
+    "scores": {
+      "revenue": 6,
+      "utility": 7,
+      "competition": 5,
+      "momentum": 2
+    },
+    "total": 20,
+    "make_today": true,
+    "product_type": "Digital prompt pack",
+    "suggested_price": 14.65,
+    "niche_angle": "ChatGPT prompts for email marketing specialists"
+  },
+  {
+    "keyword": "notion template",
+    "scores": {
+      "revenue": 7,
+      "utility": 9,
+      "competition": 2,
+      "momentum": 2
+    },
+    "total": 20,
+    "make_today": true,
+    "product_type": "Digital template",
+    "suggested_price": 89.76,
+    "niche_angle": "All-in-one Notion workspace for freelance writers with invoicing + portfolio"
+  }
+]

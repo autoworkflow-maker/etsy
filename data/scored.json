@@ -1,1 +1,142 @@
-[]
+[
+  {
+    "keyword": "social media caption pack",
+    "scores": {
+      "revenue": 7,
+      "utility": 6,
+      "competition": 6,
+      "momentum": 2
+    },
+    "total": 21,
+    "make_today": true,
+    "product_type": "Digital caption pack",
+    "suggested_price": 10.39,
+    "niche_angle": "Instagram caption pack for small business owners in beauty/wellness niche"
+  },
+  {
+    "keyword": "ai prompt pack",
+    "scores": {
+      "revenue": 6,
+      "utility": 7,
+      "competition": 5,
+      "momentum": 2
+    },
+    "total": 20,
+    "make_today": true,
+    "product_type": "Digital prompt pack",
+    "suggested_price": 14.65,
+    "niche_angle": "ChatGPT prompts for email marketing specialists"
+  },
+  {
+    "keyword": "notion template",
+    "scores": {
+      "revenue": 7,
+      "utility": 9,
+      "competition": 2,
+      "momentum": 2
+    },
+    "total": 20,
+    "make_today": true,
+    "product_type": "Digital template",
+    "suggested_price": 89.76,
+    "niche_angle": "All-in-one Notion workspace for freelance writers with invoicing + portfolio"
+  },
+  {
+    "keyword": "adhd planner printable",
+    "scores": {
+      "revenue": 5,
+      "utility": 8,
+      "competition": 2,
+      "momentum": 2
+    },
+    "total": 17,
+    "make_today": false,
+    "product_type": "PDF planner",
+    "suggested_price": 8.81,
+    "niche_angle": "ADHD-friendly weekly planner for remote workers with time-blocking"
+  },
+  {
+    "keyword": "budget tracker pdf",
+    "scores": {
+      "revenue": 4,
+      "utility": 9,
+      "competition": 1,
+      "momentum": 2
+    },
+    "total": 16,
+    "make_today": false,
+    "product_type": "PDF tracker",
+    "suggested_price": 5.09,
+    "niche_angle": "Zero-based budget tracker for couples managing joint finances"
+  },
+  {
+    "keyword": "habit tracker printable",
+    "scores": {
+      "revenue": 3,
+      "utility": 8,
+      "competition": 1,
+      "momentum": 2
+    },
+    "total": 14,
+    "make_today": false,
+    "product_type": "PDF printable",
+    "suggested_price": 4.3,
+    "niche_angle": "90-day habit tracker for fitness goals with weekly reflection prompts"
+  },
+  {
+    "keyword": "productivity planner",
+    "scores": {
+      "revenue": 4,
+      "utility": 8,
+      "competition": 1,
+      "momentum": 2
+    },
+    "total": 15,
+    "make_today": false,
+    "product_type": "PDF planner",
+    "suggested_price": 6.74,
+    "niche_angle": "Time-blocking productivity planner for entrepreneurs using GTD methodology"
+  },
+  {
+    "keyword": "weekly planner printable",
+    "scores": {
+      "revenue": 3,
+      "utility": 9,
+      "competition": 1,
+      "momentum": 2
+    },
+    "total": 15,
+    "make_today": false,
+    "product_type": "PDF printable",
+    "suggested_price": 6.17,
+    "niche_angle": "Meal planning + weekly planner combo for busy parents"
+  },
+  {
+    "keyword": "resume template",
+    "scores": {
+      "revenue": 4,
+      "utility": 3,
+      "competition": 2,
+      "momentum": 2
+    },
+    "total": 11,
+    "make_today": false,
+    "product_type": "Digital template",
+    "suggested_price": 7.34,
+    "niche_angle": "Tech industry resume template optimized for ATS systems"
+  },
+  {
+    "keyword": "party printable",
+    "scores": {
+      "revenue": 4,
+      "utility": 2,
+      "competition": 1,
+      "momentum": 2
+    },
+    "total": 9,
+    "make_today": false,
+    "product_type": "PDF printable",
+    "suggested_price": 8.84,
+    "niche_angle": "Sustainable eco-friendly birthday party printable pack"
+  }
+]
