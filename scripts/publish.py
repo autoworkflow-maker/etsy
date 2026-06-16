@@ -20,12 +20,10 @@ def publish_to_etsy(product):
         print("  No Etsy token — skipping")
         return None
 
-    headers = {
-        headers = {
-            "x-api-key": f"{ETSY_API_KEY}:{ETSY_SHARED_SECRET}",
-            "Authorization": f"Bearer {ETSY_ACCESS_TOKEN}"
-            "Content-Type": "application/x-www-form-urlencoded"
-    }
+   headers = {
+    "x-api-key": f"{ETSY_API_KEY}:{ETSY_SHARED_SECRET}",
+    "Authorization": f"Bearer {ETSY_ACCESS_TOKEN}"
+}
 
     payload = {
         "title":        product["etsy_title"][:140],
