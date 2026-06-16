@@ -4,41 +4,41 @@
     "scores": {
       "revenue": 7,
       "utility": 6,
-      "competition": 6,
-      "momentum": 2
+      "competition": 7,
+      "momentum": 3
     },
-    "total": 21,
+    "total": 23,
     "make_today": true,
-    "product_type": "Digital caption pack",
+    "product_type": "Digital content pack",
     "suggested_price": 10.39,
-    "niche_angle": "Instagram caption pack for small business owners in beauty/wellness niche"
+    "niche_angle": "Instagram caption templates for eco-friendly small businesses"
   },
   {
-    "keyword": "ai prompt pack",
+    "keyword": "adhd planner printable",
     "scores": {
       "revenue": 6,
-      "utility": 7,
-      "competition": 5,
-      "momentum": 2
+      "utility": 9,
+      "competition": 2,
+      "momentum": 3
     },
     "total": 20,
     "make_today": true,
-    "product_type": "Digital prompt pack",
-    "suggested_price": 14.65,
-    "niche_angle": "ChatGPT prompts for email marketing specialists"
+    "product_type": "PDF planner",
+    "suggested_price": 8.81,
+    "niche_angle": "Time-blindness ADHD planner for neurodivergent freelancers"
   },
   {
     "keyword": "notion template",
     "scores": {
       "revenue": 7,
-      "utility": 9,
+      "utility": 8,
       "competition": 2,
-      "momentum": 2
+      "momentum": 3
     },
     "total": 20,
     "make_today": true,
     "product_type": "Digital template",
     "suggested_price": 89.76,
-    "niche_angle": "All-in-one Notion workspace for freelance writers with invoicing + portfolio"
+    "niche_angle": "Notion CRM template for freelance coaches and consultants"
   }
 ]
