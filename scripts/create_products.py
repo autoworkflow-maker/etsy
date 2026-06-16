@@ -64,7 +64,7 @@ Return ONLY a JSON object, no explanation:
   "pdf_guide_title": "catchy PDF cover title",
   "pdf_subtitle": "one line subtitle",
   "introduction": "2 paragraph intro",
-  "worksheets": [{"title":"worksheet title","purpose":"what it helps with","instructions":"how to use it"}],
+  "worksheets": [{{"title":"worksheet title","purpose":"what it helps with","instructions":"how to use it"}}],
   "checklists": ["checklist item 1","checklist item 2","checklist item 3","checklist item 4","checklist item 5"],
   "workflow": [{{"step":1,"title":"step title","description":"what to do"}}],
   "tips": ["tip1","tip2","tip3","tip4","tip5"],
