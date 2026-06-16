@@ -34,14 +34,16 @@ jobs:
           name: trends-${{ github.run_id }}
           path: data/trends.json
 
-      - name: Commit trends to repo
-        run: |
-          git config user.email "bot@pipeline.com"
-          git config user.name "Pipeline Bot"
+       - name: Commit trends to repo
+  run: |
+    git config user.email "bot@pipeline.com"
+    git config user.name "Pipeline Bot"
 
-          git pull --rebase origin main
+    git add data/trends.json
+    git commit -m "Daily trends update $(date +%Y-%m-%d)" || true
 
-          git add data/trends.json
-          git commit -m "Daily trends update $(date +%Y-%m-%d)" || true
+    git pull --rebase origin main
 
-          git push origin main
+    git push origin main
+     
+     
