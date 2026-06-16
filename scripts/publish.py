@@ -3,6 +3,7 @@ import json
 import requests
 from datetime import datetime
 
+ETSY_REFRESH_TOKEN = os.getenv("ETSY_REFRESH_TOKEN")
 ETSY_ACCESS_TOKEN  = os.getenv("ETSY_ACCESS_TOKEN")
 ETSY_SHOP_ID       = os.getenv("ETSY_SHOP_ID")
 SHOPIFY_STORE      = os.getenv("SHOPIFY_STORE")
@@ -15,6 +16,30 @@ ETSY_SHARED_SECRET = os.getenv("ETSY_SHARED_SECRET")
 
 # ── Etsy ──────────────────────────────────────────────────────
 # ── Etsy ──────────────────────────────────────────────────────
+
+def refresh_etsy_token():
+    url = "https://api.etsy.com/v3/public/oauth/token"
+
+    headers = {
+        "x-api-key": f"{ETSY_API_KEY}:{ETSY_SHARED_SECRET}",
+        "Content-Type": "application/x-www-form-urlencoded"
+    }
+
+    payload = {
+        "grant_type": "refresh_token",
+        "client_id": ETSY_API_KEY,
+        "refresh_token": ETSY_REFRESH_TOKEN
+    }
+
+    response = requests.post(url, headers=headers, data=payload)
+    result = response.json()
+
+    if "access_token" in result:
+        print("  Etsy token refreshed")
+        return result["access_token"]
+
+    print("  Etsy refresh error:", result)
+    return ETSY_ACCESS_TOKEN
 
 def publish_to_etsy(product):
     if not ETSY_ACCESS_TOKEN:
@@ -210,6 +235,9 @@ def run():
 
     with open("data/created_today.json", "r") as f:
         products = json.load(f)
+
+    global ETSY_ACCESS_TOKEN
+    ETSY_ACCESS_TOKEN = refresh_etsy_token()
 
     published = []
 
