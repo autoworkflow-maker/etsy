@@ -337,6 +337,7 @@ today = datetime.now().strftime("%Y-%m-%d")
 created = []
 
 for i, pick in enumerate(picks):
+
     if not is_etsy_safe(pick):
         print(f"Skipped policy-risk product: {pick['keyword']}")
         continue
@@ -350,68 +351,73 @@ for i, pick in enumerate(picks):
             9.99
         )
 
-if "tracker" in ptype:
-    pick["suggested_price"] = min(
-        pick.get("suggested_price", 7.99),
-        7.99
+    if "tracker" in ptype:
+        pick["suggested_price"] = min(
+            pick.get("suggested_price", 7.99),
+            7.99
+        )
+
+    if "template" in ptype:
+        pick["suggested_price"] = min(
+            pick.get("suggested_price", 24.99),
+            24.99
+        )
+
+    slug = keyword.replace(" ", "_")[:40]
+    folder = f"products/{today}/{slug}"
+
+    os.makedirs(folder, exist_ok=True)
+
+    print(f"\nCreating product {i+1}/{len(picks)}: {keyword}")
+
+    print("  Generating content with Claude Sonnet...")
+    content = generate_product_content(pick)
+
+    pdf_path = f"{folder}/product.pdf"
+    print("  Building PDF...")
+    build_pdf(content, pick, pdf_path)
+
+    pin_path = f"{folder}/pin.png"
+    print("  Building Pinterest image...")
+    build_pin_image(content["pin_headline"], keyword, pin_path)
+
+    print("  Uploading to Cloudinary...")
+    pdf_url = upload_to_cloudinary(
+        pdf_path,
+        f"digital-products/{today}",
+        resource_type="raw"
     )
 
-if "template" in ptype:
-    pick["suggested_price"] = min(
-        pick.get("suggested_price", 24.99),
-        24.99
+    pin_url = upload_to_cloudinary(
+        pin_path,
+        f"pins/{today}",
+        resource_type="image"
     )
-        slug    = keyword.replace(" ", "_")[:40]
-        folder  = f"products/{today}/{slug}"
 
-        os.makedirs(f"products/{today}/{slug}", exist_ok=True)
+    metadata = {
+        "keyword": keyword,
+        "product_type": pick.get("product_type"),
+        "suggested_price": pick.get("suggested_price", 9.00),
+        "etsy_title": content["etsy_title"],
+        "etsy_description": content["etsy_description"],
+        "etsy_tags": content["etsy_tags"],
+        "social_post": content["social_post"],
+        "pdf_url": pdf_url,
+        "pin_url": pin_url,
+        "created_at": today
+    }
 
-        print(f"\nCreating product {i+1}/{len(picks)}: {keyword}")
+    meta_path = f"{folder}/metadata.json"
+    with open(meta_path, "w") as f:
+        json.dump(metadata, f, indent=2)
 
-        # Generate content
-        print("  Generating content with Claude Sonnet...")
-        content = generate_product_content(pick)
+    created.append(metadata)
+    print(f"  Done — PDF: {pdf_url}")
 
-        # Build PDF
-        pdf_path = f"products/{today}/{slug}/product.pdf"
-        print("  Building PDF...")
-        build_pdf(content, pick, pdf_path)
+with open("data/created_today.json", "w") as f:
+    json.dump(created, f, indent=2)
 
-        # Build Pinterest image
-        pin_path = f"products/{today}/{slug}/pin.png"
-        print("  Building Pinterest image...")
-        build_pin_image(content["pin_headline"], keyword, pin_path)
-
-        # Upload to Cloudinary
-        print("  Uploading to Cloudinary...")
-        pdf_url = upload_to_cloudinary(pdf_path, f"digital-products/{today}", resource_type="raw")
-        pin_url = upload_to_cloudinary(pin_path, f"pins/{today}", resource_type="image")
-
-        # Save metadata
-        metadata = {
-            "keyword":        keyword,
-            "product_type":   pick.get("product_type"),
-            "suggested_price": pick.get("suggested_price", 9.00),
-            "etsy_title":     content["etsy_title"],
-            "etsy_description": content["etsy_description"],
-            "etsy_tags":      content["etsy_tags"],
-            "social_post":    content["social_post"],
-            "pdf_url":        pdf_url,
-            "pin_url":        pin_url,
-            "created_at":     today
-        }
-
-        meta_path = f"products/{today}/{slug}/metadata.json"
-        with open(meta_path, "w") as f:
-            json.dump(metadata, f, indent=2)
-
-        created.append(metadata)
-        print(f"  Done — PDF: {pdf_url}")
-
-    with open("data/created_today.json", "w") as f:
-        json.dump(created, f, indent=2)
-
-    print(f"\nCreated {len(created)} products. Saved to data/created_today.json")
+print(f"\nCreated {len(created)} products. Saved to data/created_today.json")
 
 
 if __name__ == "__main__":
