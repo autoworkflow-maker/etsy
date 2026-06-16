@@ -15,7 +15,13 @@ from reportlab.lib.enums import TA_CENTER, TA_LEFT
 from PIL import Image, ImageDraw, ImageFont
 from datetime import datetime
 import math
-
+BLOCKED_TERMS = [
+    "disney","marvel","pokemon","harry potter",
+    "taylor swift","nfl","nba",
+    "cure","heal","diagnose","treat",
+    "prompt pack","ai prompt",
+    "guaranteed income","get rich"
+]
 client = Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
 # Cloudinary config
@@ -32,6 +38,14 @@ BRAND_GRAY  = colors.HexColor("#888780")
 
 
 # ── 1. Generate content with Claude Sonnet ────────────────────
+def is_etsy_safe(product):
+    text = (
+        product.get("keyword", "") + " " +
+        product.get("niche_angle", "") + " " +
+        product.get("product_type", "")
+    ).lower()
+
+    return not any(term in text for term in BLOCKED_TERMS)
 
 def generate_product_content(pick):
     prompt = f"""
@@ -50,7 +64,8 @@ Return ONLY a JSON object, no explanation:
   "pdf_guide_title": "catchy PDF cover title",
   "pdf_subtitle": "one line subtitle",
   "introduction": "2 paragraph intro",
-  "prompts": [{{"title":"prompt name","prompt":"actual prompt text","use_case":"when to use"}}],
+  "worksheets": [{"title":"worksheet title","purpose":"what it helps with","instructions":"how to use it"}],
+  "checklists": ["checklist item 1","checklist item 2","checklist item 3","checklist item 4","checklist item 5"],
   "workflow": [{{"step":1,"title":"step title","description":"what to do"}}],
   "tips": ["tip1","tip2","tip3","tip4","tip5"],
   "tools": [{{"name":"tool","what_it_does":"description","free":true}}],
@@ -60,7 +75,8 @@ Return ONLY a JSON object, no explanation:
   "social_post": "Twitter/X post max 240 chars with hashtags"
 }}
 
-Include 10 prompts, 6 workflow steps, 4 tools.
+Include 5 worksheets, 6 workflow steps, 5 checklist items, 4 tools.
+Do not create AI prompt packs, medical claims, financial guarantees, celebrity/brand/copyrighted content.
 Etsy tags must be exactly 13. Each tag max 20 chars.
 """
 
@@ -142,12 +158,12 @@ def build_pdf(content, pick, filepath):
               Paragraph(content["introduction"], body)]
 
     # Prompts
-    story += [PageBreak(), Paragraph("AI Prompts", sec_head),
+    story += [PageBreak(), Paragraph("Worksheets", sec_head),
               HRFlowable(width="100%", thickness=0.5, color=BRAND_BLUE), Spacer(1,6)]
-    for i, p in enumerate(content.get("prompts", []), 1):
+    for i, p in enumerate(content.get("worksheets", []), 1):
         story += [Paragraph(f"{i}. {p['title']}", sub_head),
-                  Paragraph(f"<b>Use case:</b> {p['use_case']}", body),
-                  Paragraph(p["prompt"], prompt_s)]
+                  Paragraph(f"<b>Purpose:</b> {p['purpose']}", body),
+                  Paragraph(p["instructions"], prompt_s)]
 
     # Workflow table
     story += [PageBreak(), Paragraph("Step-by-Step Workflow", sec_head),
@@ -289,7 +305,7 @@ def build_pin_image(headline, keyword, filepath):
 
     draw.rounded_rectangle([80,1070,920,1270], radius=30, fill=theme["accent"])
     draw.text((115,1120), "Download instantly",              font=f_med,  fill=theme["title"])
-    draw.text((115,1180), "Tools • Templates • Prompts",     font=f_sm,   fill=theme["title"])
+    draw.text((115,1180), "Templates • Planners • Trackers",     font=f_sm,   fill=theme["title"])
     draw.text((80,1375),  "Affiliate disclosure included",   font=f_foot, fill=theme["txt_d"])
 
     img.save(filepath)
@@ -321,7 +337,29 @@ def run():
     created   = []
 
     for i, pick in enumerate(picks):
+         if not is_etsy_safe(pick):
+        print(f"Skipped policy-risk product: {pick['keyword']}")
+        continue
         keyword = pick["keyword"]
+ptype = pick.get("product_type", "").lower()
+
+if "planner" in ptype:
+    pick["suggested_price"] = min(
+        pick.get("suggested_price", 9.99),
+        9.99
+    )
+
+if "tracker" in ptype:
+    pick["suggested_price"] = min(
+        pick.get("suggested_price", 7.99),
+        7.99
+    )
+
+if "template" in ptype:
+    pick["suggested_price"] = min(
+        pick.get("suggested_price", 24.99),
+        24.99
+    )
         slug    = keyword.replace(" ", "_")[:40]
         folder  = f"products/{today}/{slug}"
 
