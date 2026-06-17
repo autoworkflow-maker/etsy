@@ -1,142 +1,142 @@
 [
   {
-    "keyword": "social media caption pack",
-    "scores": {
-      "revenue": 7,
-      "utility": 6,
-      "competition": 7,
-      "momentum": 3
-    },
-    "total": 23,
-    "make_today": true,
-    "product_type": "Digital content pack",
-    "suggested_price": 10.39,
-    "niche_angle": "Instagram caption templates for eco-friendly small businesses"
-  },
-  {
-    "keyword": "ai prompt pack",
-    "scores": {
-      "revenue": 6,
-      "utility": 7,
-      "competition": 3,
-      "momentum": 3
-    },
-    "total": 19,
-    "make_today": false,
-    "product_type": "Digital prompt collection",
-    "suggested_price": 14.65,
-    "niche_angle": "ChatGPT prompts for email marketing specialists"
-  },
-  {
     "keyword": "adhd planner printable",
     "scores": {
       "revenue": 6,
       "utility": 9,
       "competition": 2,
-      "momentum": 3
+      "momentum": 0
     },
-    "total": 20,
-    "make_today": true,
+    "total": 17,
+    "make_today": false,
     "product_type": "PDF planner",
-    "suggested_price": 8.81,
-    "niche_angle": "Time-blindness ADHD planner for neurodivergent freelancers"
+    "suggested_price": 12.99,
+    "niche_angle": "ADHD-friendly weekly planner with time-blocking and dopamine rewards"
   },
   {
     "keyword": "budget tracker pdf",
     "scores": {
-      "revenue": 5,
+      "revenue": 3,
       "utility": 9,
       "competition": 1,
-      "momentum": 3
+      "momentum": 0
     },
-    "total": 18,
+    "total": 13,
     "make_today": false,
     "product_type": "PDF tracker",
-    "suggested_price": 5.09,
-    "niche_angle": "Debt payoff budget tracker for single parents"
+    "suggested_price": 3.99,
+    "niche_angle": "Couples budget tracker with spending categories and debt payoff timeline"
   },
   {
     "keyword": "notion template",
     "scores": {
-      "revenue": 7,
+      "revenue": 8,
       "utility": 8,
       "competition": 2,
-      "momentum": 3
+      "momentum": 0
     },
-    "total": 20,
-    "make_today": true,
+    "total": 18,
+    "make_today": false,
     "product_type": "Digital template",
-    "suggested_price": 89.76,
-    "niche_angle": "Notion CRM template for freelance coaches and consultants"
+    "suggested_price": 19.99,
+    "niche_angle": "Notion template for freelance project management with invoice tracking"
+  },
+  {
+    "keyword": "ai prompt pack",
+    "scores": {
+      "revenue": 5,
+      "utility": 7,
+      "competition": 5,
+      "momentum": 0
+    },
+    "total": 17,
+    "make_today": false,
+    "product_type": "Digital pack",
+    "suggested_price": 9.99,
+    "niche_angle": "ChatGPT prompts specifically for e-commerce sellers launching new products"
   },
   {
     "keyword": "habit tracker printable",
     "scores": {
-      "revenue": 4,
+      "revenue": 2,
       "utility": 9,
       "competition": 1,
-      "momentum": 3
+      "momentum": 0
     },
-    "total": 17,
+    "total": 12,
     "make_today": false,
     "product_type": "PDF tracker",
-    "suggested_price": 4.3,
-    "niche_angle": "Fitness habit tracker for post-pregnancy recovery"
+    "suggested_price": 2.99,
+    "niche_angle": "Minimalist habit tracker for building exercise routines with streak counters"
   },
   {
     "keyword": "productivity planner",
     "scores": {
-      "revenue": 5,
+      "revenue": 7,
       "utility": 9,
       "competition": 1,
-      "momentum": 3
+      "momentum": 0
     },
-    "total": 18,
+    "total": 17,
     "make_today": false,
     "product_type": "PDF planner",
-    "suggested_price": 6.74,
-    "niche_angle": "Time-blocking productivity planner for ADHD knowledge workers"
+    "suggested_price": 8.99,
+    "niche_angle": "Quarterly productivity planner for solopreneurs with goal-setting frameworks"
   },
   {
     "keyword": "weekly planner printable",
     "scores": {
-      "revenue": 5,
+      "revenue": 4,
       "utility": 9,
       "competition": 1,
-      "momentum": 3
+      "momentum": 0
     },
-    "total": 18,
+    "total": 14,
     "make_today": false,
     "product_type": "PDF planner",
-    "suggested_price": 6.17,
-    "niche_angle": "Minimalist weekly planner for busy parents balancing work and home"
+    "suggested_price": 3.99,
+    "niche_angle": "Teachers' weekly planner with lesson prep sections and student feedback columns"
+  },
+  {
+    "keyword": "social media caption pack",
+    "scores": {
+      "revenue": 4,
+      "utility": 6,
+      "competition": 6,
+      "momentum": 0
+    },
+    "total": 16,
+    "make_today": false,
+    "product_type": "Digital pack",
+    "suggested_price": 7.99,
+    "niche_angle": "Instagram caption pack for sustainable fashion brands with hashtag strategies"
   },
   {
     "keyword": "resume template",
     "scores": {
-      "revenue": 5,
-      "utility": 3,
-      "competition": 1,
-      "momentum": 3
+      "revenue": 4,
+      "utility": 4,
+      "competition": 2,
+      "momentum": 0
     },
-    "total": 12,
+    "total": 10,
     "make_today": false,
-    "product_type": "PDF template",
-    "suggested_price": 7.34,
-    "niche_angle": "Career-switcher resume template for tech bootcamp graduates"
+    "product_type": "Digital template",
+    "suggested_price": 5.99,
+    "niche_angle": "ATS-optimized resume template for tech career changers from non-tech backgrounds"
   },
   {
     "keyword": "party printable",
     "scores": {
-      "revenue": 6,
-      "utility": 2,
+      "revenue": 5,
+      "utility": 3,
       "competition": 1,
-      "momentum": 3
+      "momentum": 0
     },
-    "total": 12,
+    "total": 9,
     "make_today": false,
-    "product_type": "Printable bundle",
-    "suggested_price": 8.84,
-    "niche_angle": "Sustainable zero-waste birthday party printables for eco-conscious parents"
+    "product_type": "PDF printable",
+    "suggested_price": 6.99,
+    "niche_angle": "Boho bachelorette party printable bundle with games and scavenger hunts"
   }
 ]
