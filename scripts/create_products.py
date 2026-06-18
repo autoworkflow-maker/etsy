@@ -390,7 +390,7 @@ def run():
                 f"digital-products/{today}",
                 resource_type="raw"
             )
-            )
+            
 
         pin_path = f"{folder}/pin.png"
         print("  Building Pinterest image...")
