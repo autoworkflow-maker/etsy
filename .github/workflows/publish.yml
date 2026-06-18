@@ -1,9 +1,9 @@
 name: Stage 4 — Auto Publish
 
 on:
-  workflow_run:
-    workflows: ["Stage 3 — Product Creation"]
-    types: [completed]
+  #workflow_run:
+    #workflows: ["Stage 3 — Product Creation"]
+    #types: [completed]
   workflow_dispatch:
 
 jobs:
