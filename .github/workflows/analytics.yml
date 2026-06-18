@@ -1,8 +1,8 @@
 name: Stage 5 — Analytics & Smart Sales Manager
 
 on:
-  schedule:
-    - cron: '0 22 * * *'  # Every day at 10:00 PM UTC
+  #schedule:
+   # - cron: '0 22 * * *'  # Every day at 10:00 PM UTC
   workflow_dispatch:
 
 jobs:
