@@ -17,9 +17,9 @@ class ProductFileBuilder:
             or "planner" in text
             or "template" in text
         ):
-        return self.build_budget_tracker()
+            return self.build_budget_tracker()
 
-    return None
+        return None
 
     def build_budget_tracker(self):
         filepath = os.path.join(self.folder, "tracker.xlsx")
