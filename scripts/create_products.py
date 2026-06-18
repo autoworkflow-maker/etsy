@@ -379,8 +379,8 @@ def run():
         build_pdf(content, pick, pdf_path)
         file_url = None
 
-       builder = ProductFileBuilder(folder)
-       file_path = builder.build_for_product(keyword, ptype)
+        builder = ProductFileBuilder(folder)
+        file_path = builder.build_for_product(keyword, ptype)
 
         file_url = None
 
