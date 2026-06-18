@@ -11,8 +11,12 @@ class ProductFileBuilder:
     def build_for_product(self, keyword, product_type):
         text = f"{keyword} {product_type}".lower()
 
-        if "budget" in text or "tracker" in text:
-            return self.build_budget_tracker()
+        if (
+            "budget" in text
+            or "tracker" in text
+            or "planner" in text
+            or "template" in text
+        ):
 
         return None
 
