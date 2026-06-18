@@ -11,7 +11,7 @@ class ProductFileBuilder:
     {"name": "Royal Purple", "primary": "5B2C83", "accent": "EADCF8", "dark": "2E1745"},
     {"name": "Charcoal Gold", "primary": "2F3437", "accent": "FFF2CC", "dark": "1C1C1C"},
     {"name": "Ocean Teal", "primary": "008C95", "accent": "DDEBF7", "dark": "004B50"},
-]
+    ]
     
     def __init__(self, folder):
         self.folder = folder
@@ -33,13 +33,13 @@ class ProductFileBuilder:
         return None
 
     def build_budget_tracker(self, theme):
-    import os
-    from openpyxl import Workbook
-    from openpyxl.styles import Font, PatternFill, Border, Side, Alignment
+        import os
+        from openpyxl import Workbook
+        from openpyxl.styles import Font, PatternFill, Border, Side, Alignment
 
-    filepath = os.path.join(self.folder, "budget_tracker.xlsx")
+        filepath = os.path.join(self.folder, "budget_tracker.xlsx")
 
-    wb = Workbook()
+        wb = Workbook()
 
     # ── Transactions Sheet ─────────────────────────
     ws = wb.active
