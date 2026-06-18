@@ -424,7 +424,7 @@ def run():
             "social_post": content["social_post"],
             "pdf_url": pdf_url,
             "pin_url": pin_url,
-            "created_at": today
+            "created_at": today,
             "product_file_url": file_url,
         }
 
