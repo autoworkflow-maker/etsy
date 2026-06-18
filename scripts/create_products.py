@@ -11,7 +11,7 @@ from openpyxl import Workbook
 from openpyxl.styles import Font
 from product_file_builder import ProductFileBuilder
 
-from docx import Document
+#from docx import Document
 
 import csv
 from reportlab.platypus import (
