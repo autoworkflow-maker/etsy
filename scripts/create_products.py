@@ -9,6 +9,7 @@ from reportlab.lib.units import inch
 from reportlab.lib import colors
 from openpyxl import Workbook
 from openpyxl.styles import Font
+from product_file_builder import ProductFileBuilder
 
 from docx import Document
 
@@ -318,27 +319,7 @@ def build_pin_image(headline, keyword, filepath):
     img.save(filepath)
     return filepath
 
-def build_budget_tracker_xlsx(filepath):
-    wb = Workbook()
-    ws = wb.active
-    ws.title = "Budget Tracker"
 
-    headers = [
-        "Date",
-        "Description",
-        "Category",
-        "Income",
-        "Expense",
-        "Balance"
-    ]
-
-    for col_num, header in enumerate(headers, start=1):
-        cell = ws.cell(row=1, column=col_num)
-        cell.value = header
-        cell.font = Font(bold=True)
-
-    wb.save(filepath)
-    return filepath
 
 
 # ── 4. Upload to Cloudinary ───────────────────────────────────
@@ -384,6 +365,8 @@ def run():
 
         slug = keyword.replace(" ", "_")[:40]
         folder = f"products/{today}/{slug}"
+        builder = ProductFileBuilder(folder)
+        file_path = builder.build_for_product(keyword, ptype)
         os.makedirs(folder, exist_ok=True)
 
         print(f"\nCreating product {i+1}/{len(picks)}: {keyword}")
@@ -396,14 +379,17 @@ def run():
         build_pdf(content, pick, pdf_path)
         file_url = None
 
-        if "budget" in keyword.lower() or "tracker" in ptype:
-            excel_path = f"{folder}/tracker.xlsx"
-            build_budget_tracker_xlsx(excel_path)
+       builder = ProductFileBuilder(folder)
+       file_path = builder.build_for_product(keyword, ptype)
 
+        file_url = None
+
+        if file_path:
             file_url = upload_to_cloudinary(
-                excel_path,
+                file_path,
                 f"digital-products/{today}",
                 resource_type="raw"
+            )
             )
 
         pin_path = f"{folder}/pin.png"
