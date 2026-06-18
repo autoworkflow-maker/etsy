@@ -7,6 +7,12 @@ from reportlab.lib.pagesizes import letter
 from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
 from reportlab.lib.units import inch
 from reportlab.lib import colors
+from openpyxl import Workbook
+from openpyxl.styles import Font
+
+from docx import Document
+
+import csv
 from reportlab.platypus import (
     SimpleDocTemplate, Paragraph, Spacer,
     HRFlowable, PageBreak, Table, TableStyle
@@ -312,6 +318,28 @@ def build_pin_image(headline, keyword, filepath):
     img.save(filepath)
     return filepath
 
+def build_budget_tracker_xlsx(filepath):
+    wb = Workbook()
+    ws = wb.active
+    ws.title = "Budget Tracker"
+
+    headers = [
+        "Date",
+        "Description",
+        "Category",
+        "Income",
+        "Expense",
+        "Balance"
+    ]
+
+    for col_num, header in enumerate(headers, start=1):
+        cell = ws.cell(row=1, column=col_num)
+        cell.value = header
+        cell.font = Font(bold=True)
+
+    wb.save(filepath)
+    return filepath
+
 
 # ── 4. Upload to Cloudinary ───────────────────────────────────
 
@@ -366,6 +394,17 @@ def run():
         pdf_path = f"{folder}/product.pdf"
         print("  Building PDF...")
         build_pdf(content, pick, pdf_path)
+        file_url = None
+
+        if "budget" in keyword.lower() or "tracker" in ptype:
+            excel_path = f"{folder}/tracker.xlsx"
+            build_budget_tracker_xlsx(excel_path)
+
+            file_url = upload_to_cloudinary(
+                excel_path,
+                f"digital-products/{today}",
+                resource_type="raw"
+            )
 
         pin_path = f"{folder}/pin.png"
         print("  Building Pinterest image...")
@@ -386,6 +425,7 @@ def run():
             "pdf_url": pdf_url,
             "pin_url": pin_url,
             "created_at": today
+            "product_file_url": file_url,
         }
 
         meta_path = f"{folder}/metadata.json"
