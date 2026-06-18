@@ -1,9 +1,9 @@
 name: Stage 2 — AI Analysis
 
 on:
-  workflow_run:
-    workflows: ["Stage 1 — Daily Trend Research"]
-    types: [completed]
+  #workflow_run:
+    #workflows: ["Stage 1 — Daily Trend Research"]
+    #types: [completed]
   workflow_dispatch:
 
 jobs:
